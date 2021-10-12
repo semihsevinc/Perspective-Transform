@@ -18,7 +18,7 @@ point4= []
 myPoints = []
 myColor= []
 
-img = cv2.imread(path)
+img = cv2.imread(path,)
 im = Image.open(path)
 width, height = im.size
 
@@ -28,7 +28,7 @@ def mousePoints(event,x,y,flags,params):
         if counter==0:
             point1=int(x),int(y)
             counter +=1
-            myColor = (random.randint(0,2)*200,random.randint(0,2)*200,random.randint(0,2)*200 )
+            myColor = (0,0,255)
         elif counter ==1:
             point2=int(x),int(y)
             counter += 1
@@ -46,8 +46,8 @@ def mousePoints(event,x,y,flags,params):
 
             dst = cv2.warpPerspective(img, M, (width, height))
 
-            plt.subplot(121), plt.imshow(img), plt.title('Input')
-            plt.subplot(122), plt.imshow(dst), plt.title('Output')
+            plt.subplot(121), plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)), plt.title('Orijinal Görüntü')
+            plt.subplot(122), plt.imshow(cv2.cvtColor(dst, cv2.COLOR_BGR2RGB)), plt.title('Kuş Bakışı Görüntü')
             cv2.imwrite('pers.png', dst)
             plt.show()
 
@@ -59,7 +59,7 @@ def mousePoints(event,x,y,flags,params):
 while True:
     # To Display points
     for x,y,color in circles:
-        cv2.circle(img,(x,y),3,myColor,cv2.FILLED)
+        cv2.circle(img,(x,y),5,myColor,cv2.FILLED)
     cv2.imshow("Original Image ", img)
     cv2.setMouseCallback("Original Image ", mousePoints)
     if cv2.waitKey(1) & 0xFF == ord('q'):
